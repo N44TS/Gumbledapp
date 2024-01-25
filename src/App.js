@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import abi from "./utils/abi.json";
 import "./App.css";
-import CountdownTimer from "./CountdownTimer";
 import {
   fetchPredictions,
   fetchLatestPredictionsModeTestnet,
 } from "./ModeTestnetEndpoint";
-import LatestPredictionsTable from "./LiveLatestPredictions";
+import CountdownTimer from "./components/CountdownTimer";
+import LatestPredictionsTable from "./components/LiveLatestPredictions";
+import AdminPanel from "./components/AdminPanel";
 
-const contractAddress = "0xD228cE3E08937f7D0A1869e4C694FBf3Bf78f66f"; //usually would be in .env but here for hackathon so can be checked on chain
+//when changing contract address DONT FORGET to chnge in modetestnetendpoint file
+const contractAddress = "0xf62De52838695EdC6B075Bf33CFF7f960f3f9034"; //usually would be in .env but here for hackathon so can be checked on chain
 const theQuestion = `Predict MILADY MAKER floor price (whole $USD) `; //easy to change the questoin up here
 
 function App() {
