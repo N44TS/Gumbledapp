@@ -82,6 +82,19 @@ function App() {
 
   //are they an admin or a winner?
   useEffect(() => {
+    const checkIfWinner = async () => {
+      if (contract && account) {
+        try {
+          const position = await contract.winnerPosition(account);
+          const isWinnerNow = position > 0;
+          setIsWinner(isWinnerNow);
+          setShowWinningAnimation(isWinnerNow); // Trigger the animation if the user is a winner
+        } catch (error) {
+          console.error("Error checking winner status:", error);
+        }
+      }
+    };
+
     const checkAdminAndWinnerStatus = async () => {
       if (contract && account) {
         try {
@@ -92,7 +105,7 @@ function App() {
           console.log("Are you admin?:", isAdminNow);
 
           // Check if the logged-in user is a winner
-          checkIfWinner(account);
+          await checkIfWinner();
         } catch (error) {
           console.error("Error in admin and winner status check:", error);
         }
@@ -102,79 +115,7 @@ function App() {
     checkAdminAndWinnerStatus();
   }, [contract, account]); // Dependencies
 
-  // useEffect(() => {
-  //   const init = async () => {
-  //     if (window.ethereum) {
-  //       try {
-  //         const provider = new ethers.BrowserProvider(window.ethereum);
-  //         const signer = await provider.getSigner();
-  //         const contractInstance = new ethers.Contract(
-  //           contractAddress,
-  //           abi,
-  //           signer
-  //         );
-
-  //         setContract(contractInstance);
-  //         const userAccount = await signer.getAddress();
-  //         setAccount(userAccount);
-  //         console.log(
-  //           "Hey babes, come here often?... looks around the console...passes you a red wine..."
-  //         );
-
-  //         const adminAddress = await contractInstance.admin();
-  //         setIsAdmin(adminAddress.toLowerCase() === userAccount.toLowerCase());
-  //         console.log("Are you admin?:", isAdmin);
-
-  //         // Check if the logged-in user is a winner
-  //         checkIfWinner(userAccount);
-
-  //         // Check the chain ID to see if it's the Mode network
-  //         const chainId = await window.ethereum.request({
-  //           method: "eth_chainId",
-  //         });
-  //         setIsModeNetwork(chainId === "0x397"); // "0x397" corresponds to the Mode network (chain ID 919)
-  //       } catch (error) {
-  //         console.error(
-  //           "Error during Ethereum provider initialization:",
-  //           error
-  //         );
-  //       }
-  //     } else {
-  //       console.log(
-  //         "Ethereum provider not found. You can view the data but cannot interact. PLs login to Metamask"
-  //       );
-  //       // fetchData();
-  //     }
-  //   };
-
-  //   init();
-  //   checkIfWinner();
-  // });
-
-  // FUNCTIONS
-  const checkIfWinner = async () => {
-    if (contract && account) {
-      try {
-        const position = await contract.winnerPosition(account);
-        const isWinnerNow = position > 0;
-        setIsWinner(isWinnerNow);
-        setShowWinningAnimation(isWinnerNow); // Trigger the animation if the user is a winner
-      } catch (error) {
-        console.error("Error checking winner status:", error);
-      }
-    }
-  };
-
-  const checkIfAdmin = async (userAccount) => {
-    try {
-      const adminAddress = await contract.admin(); // Use contract directly
-      setIsAdmin(adminAddress.toLowerCase() === userAccount.toLowerCase());
-      console.log("Is Admin:", isAdmin);
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-    }
-  };
-
+  //Functions
   const submitPrediction = useCallback(async () => {
     if (!prediction || isSubmitting) return;
 
@@ -244,6 +185,7 @@ function App() {
     }
   };
 
+  //function only admin can see, to move the sfs fees to the contract - nft must be owned by contract to work
   const claimSFSFees = async () => {
     const amount = parseFloat(sfsFeeAmount); // Convert string to a floating-point number
     if (isNaN(amount) || amount <= 0) {
@@ -254,7 +196,10 @@ function App() {
       await contract.claimSFSFees(sfsFeeAmount);
       console.log(`SFS fees claimed: ${sfsFeeAmount}`);
     } catch (error) {
-      console.error("Error claiming SFS fees:", error);
+      console.error(
+        "Error claiming SFS fees - make sure nft owned by contract:",
+        error
+      );
     }
   };
 
