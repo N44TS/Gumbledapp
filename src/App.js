@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
 import abi from "./utils/abi.json";
 import "./App.css";
@@ -40,6 +40,7 @@ function App() {
   // // Temporary variable for development (set to 'true' to simulate being a winner)
   // const [isTempWinner, setIsTempWinner] = useState(true); // Change to true to test winner view
 
+  // EVM connection stuff
   useEffect(() => {
     const init = async () => {
       if (window.ethereum) {
@@ -59,18 +60,10 @@ function App() {
             "Hey babes, come here often?... looks around the console...passes you a red wine..."
           );
 
-          const adminAddress = await contractInstance.admin();
-          setIsAdmin(adminAddress.toLowerCase() === userAccount.toLowerCase());
-          console.log("Are you admin?:", isAdmin);
-
-          // Check if the logged-in user is a winner
-          checkIfWinner(userAccount);
-
-          // Check the chain ID to see if it's the Mode network
           const chainId = await window.ethereum.request({
             method: "eth_chainId",
           });
-          setIsModeNetwork(chainId === "0x397"); // "0x397" corresponds to the Mode network (chain ID 919)
+          setIsModeNetwork(chainId === "0x397"); // "0x397" is Mode network (chain ID 919)
         } catch (error) {
           console.error(
             "Error during Ethereum provider initialization:",
@@ -79,16 +72,86 @@ function App() {
         }
       } else {
         console.log(
-          "Ethereum provider not found. You can view the data but cannot interact. PLs login to Metamask"
+          "Ethereum provider not found. You can view the data but cannot interact. Please login to Metamask"
         );
-        // fetchData();
       }
     };
 
     init();
-    checkIfWinner();
-  }, [account, contract]);
+  }, []); // Empty dependency array to ensure this runs only once
 
+  //are they an admin or a winner?
+  useEffect(() => {
+    const checkAdminAndWinnerStatus = async () => {
+      if (contract && account) {
+        try {
+          const adminAddress = await contract.admin();
+          const isAdminNow =
+            adminAddress.toLowerCase() === account.toLowerCase();
+          setIsAdmin(isAdminNow);
+          console.log("Are you admin?:", isAdminNow);
+
+          // Check if the logged-in user is a winner
+          checkIfWinner(account);
+        } catch (error) {
+          console.error("Error in admin and winner status check:", error);
+        }
+      }
+    };
+
+    checkAdminAndWinnerStatus();
+  }, [contract, account]); // Dependencies
+
+  // useEffect(() => {
+  //   const init = async () => {
+  //     if (window.ethereum) {
+  //       try {
+  //         const provider = new ethers.BrowserProvider(window.ethereum);
+  //         const signer = await provider.getSigner();
+  //         const contractInstance = new ethers.Contract(
+  //           contractAddress,
+  //           abi,
+  //           signer
+  //         );
+
+  //         setContract(contractInstance);
+  //         const userAccount = await signer.getAddress();
+  //         setAccount(userAccount);
+  //         console.log(
+  //           "Hey babes, come here often?... looks around the console...passes you a red wine..."
+  //         );
+
+  //         const adminAddress = await contractInstance.admin();
+  //         setIsAdmin(adminAddress.toLowerCase() === userAccount.toLowerCase());
+  //         console.log("Are you admin?:", isAdmin);
+
+  //         // Check if the logged-in user is a winner
+  //         checkIfWinner(userAccount);
+
+  //         // Check the chain ID to see if it's the Mode network
+  //         const chainId = await window.ethereum.request({
+  //           method: "eth_chainId",
+  //         });
+  //         setIsModeNetwork(chainId === "0x397"); // "0x397" corresponds to the Mode network (chain ID 919)
+  //       } catch (error) {
+  //         console.error(
+  //           "Error during Ethereum provider initialization:",
+  //           error
+  //         );
+  //       }
+  //     } else {
+  //       console.log(
+  //         "Ethereum provider not found. You can view the data but cannot interact. PLs login to Metamask"
+  //       );
+  //       // fetchData();
+  //     }
+  //   };
+
+  //   init();
+  //   checkIfWinner();
+  // });
+
+  // FUNCTIONS
   const checkIfWinner = async () => {
     if (contract && account) {
       try {
@@ -112,7 +175,7 @@ function App() {
     }
   };
 
-  const submitPrediction = async () => {
+  const submitPrediction = useCallback(async () => {
     if (!prediction || isSubmitting) return;
 
     try {
@@ -140,7 +203,7 @@ function App() {
         window.alert("🚫Admin cannot submit predictions, go away!🚫");
       }
     }
-  };
+  }, [prediction, isSubmitting, contract]);
 
   // Fetch the total number of predictions and convert it to a string to show on ALL networks cos of modetestnetendpoint
   // fetch latest predictions for the live table
