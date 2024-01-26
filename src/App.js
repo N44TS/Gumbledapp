@@ -23,9 +23,10 @@ function App() {
   const [winningNumber, setWinningNumber] = useState("");
   const [sfsFeeAmount, setSfsFeeAmount] = useState("");
   const [isWinner, setIsWinner] = useState(false);
+  const [showWinningAnimation, setShowWinningAnimation] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
   const [showRegistrationStatus, setShowRegistrationStatus] = useState(false);
   const [isContractRegistered, setIsContractRegistered] = useState(null);
-  const [showWinningAnimation, setShowWinningAnimation] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [sfsTokenId, setSfsTokenId] = useState(null);
@@ -80,7 +81,7 @@ function App() {
     };
 
     init();
-  }, []); // Empty dependency array to ensure this runs only once
+  }, []); // Empty dependency array so this runs only once
 
   //are they an admin or a winner?
   useEffect(() => {
@@ -128,8 +129,6 @@ function App() {
       setIsSubmitting(false);
       // Allow for immediate subsequent submissions
       setHasSubmitted(false);
-
-      setShowWinningAnimation(true);
       window.alert(`Prediction ${prediction} submitted. Good luck!`);
 
       // Reset the input field and button after successful submission
@@ -165,11 +164,16 @@ function App() {
   //function for winner to be able to get their prize
   const claimReward = async () => {
     try {
+      setIsClaiming(true); // Start the claiming process
       await contract.claimReward();
       console.log("Reward claimed");
+      alert("Reward Claimed!");
       setShowWinningAnimation(false); // Hide the winning animation after claiming
     } catch (error) {
       console.error("Error claiming reward:", error);
+    } finally {
+      setIsClaiming(false);
+      setIsWinner(false);
     }
   };
 
@@ -309,12 +313,20 @@ function App() {
 
       {/* Winner card */}
       {isWinner && (
-        <div className="winning-animation">
+        <div
+          className={`winning-animation ${
+            isClaiming ? "stop-spin" : "continue-spin"
+          }`}
+        >
           <div className="winning-message">
             You Won!
             <p>yes, srsly....</p>
-            <button onClick={claimReward} className="claim-button">
-              get my money
+            <button
+              onClick={claimReward}
+              className="claim-button"
+              disabled={isClaiming}
+            >
+              {isClaiming ? "please wait..." : "Get my money"}
             </button>
           </div>
         </div>
