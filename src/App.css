@@ -316,8 +316,6 @@ input[type=number] {
   color: #FF2E63; 
 }
 
-
-
 .prediction-box-container {
   display: flex;
   justify-content: space-between; /* Space evenly between the two boxes */

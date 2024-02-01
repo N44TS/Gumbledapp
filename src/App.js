@@ -11,7 +11,7 @@ import LatestPredictionsTable from "./components/LiveLatestPredictions";
 import AdminPanel from "./components/AdminPanel";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
-const contractAddress = "0xf62De52838695EdC6B075Bf33CFF7f960f3f9034"; //usually would be in .env but here for hackathon so can be checked on chain
+const contractAddress = "0xfc25D2e32e87E1790aFC7297D1581539904DB594"; //usually would be in .env but here for hackathon so can be checked on chain
 const theQuestion = `Predict MILADY MAKER floor price (whole $USD) `; //easy to change the questoin up here
 
 function App() {
