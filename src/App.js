@@ -11,7 +11,7 @@ import LatestPredictionsTable from "./components/LiveLatestPredictions";
 import AdminPanel from "./components/AdminPanel";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
-const contractAddress = "0xfc25D2e32e87E1790aFC7297D1581539904DB594"; //usually would be in .env but here for hackathon so can be checked on chain
+const contractAddress = "0x1a963DE1Be1e2799Ce06e182976BeB1a7596e905"; //usually would be in .env but here for hackathon so can be checked on chain
 const theQuestion = `Predict Valentines Day BTC price (in whole $USD) `; //easy to change the questoin up here
 
 function App() {
@@ -172,6 +172,21 @@ function App() {
       contract.off("RewardClaimed");
     });
   };
+
+  //WINNER POSITON - make sure has a position before claiming
+  // const position = contract.winnerPosition(account);
+  // console.log(`Winner Position: ${position}`);
+
+  // async function checkWinnerAndClaim() {
+  //   const position = await contract.winnerPosition(account);
+  //   console.log(`Winner Position: ${position}`);
+  //   if (position > 0) {
+  //       // If the position is valid, then call claimReward
+  //       await claimReward();
+  //   } else {
+  //       console.log("Not eligible or already claimed");
+  //   }
+  // }
 
   //function for winner to be able to get their prize
   const claimReward = async () => {

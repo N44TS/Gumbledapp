@@ -30,8 +30,9 @@
 //     uint256 public sfsTokenId;
 //     address payable public admin;
 
-//     // mapping to track if number has been already predicted
-//     mapping(uint256 => bool) public hasBeenPredicted;
+//     uint256 private gameVersion = 1;
+//     // mapping to track if number has been already predicted in this game version
+//     mapping(uint256 => mapping(uint256 => bool)) public hasBeenPredictedByVersion;
 
 //     struct Prediction {
 //     address predictor;
@@ -55,6 +56,9 @@
 
 //     event WinningNumberSet(uint256 winningNumber);
 //     event RewardClaimed(address indexed winner, uint256 amount);
+//       // Event to log the transfer of 10% to admin for TESTING!! - can remove when fixed 
+//     event AdminFeeTransferred(address indexed admin, uint256 amount);
+
 
 //     constructor(address _feeSharingContractAddress, uint256 _sfsTokenId) {
 //         admin = payable(msg.sender);
@@ -66,9 +70,9 @@
 
 //     // PREDICTIONS STUFF
 //     function submitPrediction(uint256 _predictedNumber) external onlyNotAdmin {
-//         require(!hasBeenPredicted[_predictedNumber], "Number already predicted");
+//         require(!hasBeenPredictedByVersion[gameVersion][_predictedNumber], "Number already predicted in this version");
 //         predictions.push(Prediction(msg.sender, _predictedNumber));
-//         hasBeenPredicted[_predictedNumber] = true;
+//         hasBeenPredictedByVersion[gameVersion][_predictedNumber] = true;
 //         emit PredictionSubmitted(msg.sender, _predictedNumber);
 //     }
 
@@ -164,8 +168,6 @@
 //     require(adminSent, "Failed to send admin fee");
 //     emit AdminFeeTransferred(admin, adminFee);
 // }
-//     // Event to log the transfer of 10% to admin for TESTING!! - can remove when fixed 
-//     event AdminFeeTransferred(address indexed admin, uint256 amount);
 
 //     // other bits not to do with rewards or winning
 //     function checkRegistration()
@@ -214,6 +216,8 @@
 //     //RESET PREDICTIONS
 //     function resetGame() public {
 //     require(msg.sender == admin, "Only admin can reset the game");
+//     // Increment the game version
+//     gameVersion++; 
 //     // Clear the predictions array
 //     delete predictions;
 //     // Reset the winning number
@@ -222,9 +226,9 @@
 //     for (uint256 i = 0; i < predictions.length; i++) {
 //     delete winnerPosition[predictions[i].predictor];
 //     }
-//     // Reset hasBeenPredicted mapping
+//     // Reset hasBeenPredicted mapping for the current game version
 //     for (uint256 i = 0; i < predictions.length; i++) {
-//     delete hasBeenPredicted[predictions[i].predictedNumber];
+//     hasBeenPredictedByVersion[gameVersion][predictions[i].predictedNumber] = false;
 //     }
 //     // Reset admin winning claim
 //     adminFeeClaimed = false; // Reset admin fee claim flag
