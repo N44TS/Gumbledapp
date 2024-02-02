@@ -265,6 +265,43 @@ input[type=number] {
   z-index: 10;
   position: absolute;
   top: -300px; /* Start off-screen */
+  left: 40%;
+  transform: translateX(-50%) rotate(360deg);
+  width: 280px;
+  height: 300px;
+  background-color: #FF2E63; 
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-align: center;
+  animation: dropDown 3s forwards, bounce 1s infinite alternate;
+  border-radius: 20px;
+  border-color: #121212;
+  box-shadow: 0 0 15px #c0c0c0;
+}
+
+@keyframes dropDown {
+  to {
+    top: 29%;
+    transform: translateX(-50%) rotate(360deg) rotateZ(360deg);
+  }
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-80px);
+  }
+}
+
+.winning-animation-spin {
+  z-index: 10;
+  position: absolute;
+  top: -300px; /* Start off-screen */
   left: 50%;
   transform: translateX(-50%) rotate(360deg);
   width: 280px;
@@ -276,17 +313,10 @@ input[type=number] {
   align-items: center;
   font-size: 2rem;
   text-align: center;
-  animation: dropDown 3s forwards, spin 5s infinite;
+  animation: dropDown 3s forwards, spin 6s infinite;
   border-radius: 20px;
   border-color: #121212;
   box-shadow: 0 0 15px #c0c0c0;
-}
-
-@keyframes dropDown {
-  to {
-    top: 45%;
-    transform: translateX(-50%) rotate(360deg) rotateZ(360deg);
-  }
 }
 
 @keyframes spin {
