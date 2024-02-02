@@ -12,7 +12,7 @@ import AdminPanel from "./components/AdminPanel";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
 const contractAddress = "0xfc25D2e32e87E1790aFC7297D1581539904DB594"; //usually would be in .env but here for hackathon so can be checked on chain
-const theQuestion = `Predict MILADY MAKER floor price (whole $USD) `; //easy to change the questoin up here
+const theQuestion = `Predict BTC price (in whole $USD) `; //easy to change the questoin up here
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -161,16 +161,30 @@ function App() {
     fetchData();
   }, []);
 
+  // set up a listener for the RewardClaimed event so winner can see how much they won
+  const listenForRewardClaimed = () => {
+    // Listen for the event.
+    contract.on("RewardClaimed", (winner, amount) => {
+      const formattedAmount = ethers.formatEther(amount);
+      alert(`Reward Claimed: ${formattedAmount} ETH`);
+      setShowWinningAnimation(false); // Hide the winning animation after claiming
+      // Stop listening to this event once it's caught
+      contract.off("RewardClaimed");
+    });
+  };
+
   //function for winner to be able to get their prize
   const claimReward = async () => {
+    setIsClaiming(true);
     try {
-      setIsClaiming(true); // Start the claiming process
-      await contract.claimReward();
-      console.log("Reward claimed");
-      alert("Reward Claimed!");
-      setShowWinningAnimation(false); // Hide the winning animation after claiming
+      // Set up the listener before sending the transaction
+      listenForRewardClaimed();
+
+      const txResponse = await contract.claimReward();
+      await txResponse.wait(); // Wait for transaction confirmation
     } catch (error) {
       console.error("Error claiming reward:", error);
+      alert("An error occurred while claiming the reward.");
     } finally {
       setIsClaiming(false);
       setIsWinner(false);
@@ -314,13 +328,13 @@ function App() {
       {/* Winner card */}
       {isWinner && (
         <div
-          className={`winning-animation ${
-            isClaiming ? "stop-spin" : "continue-spin"
-          }`}
+          className={
+            isClaiming ? "winning-animation-spin" : "winning-animation"
+          }
         >
           <div className="winning-message">
             You Won!
-            <p>yes, srsly....</p>
+            <p>3rd place</p>
             <button
               onClick={claimReward}
               className="claim-button"
