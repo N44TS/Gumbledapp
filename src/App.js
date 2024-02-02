@@ -12,7 +12,7 @@ import AdminPanel from "./components/AdminPanel";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
 const contractAddress = "0xfc25D2e32e87E1790aFC7297D1581539904DB594"; //usually would be in .env but here for hackathon so can be checked on chain
-const theQuestion = `Predict BTC price (in whole $USD) `; //easy to change the questoin up here
+const theQuestion = `Predict Valentines Day BTC price (in whole $USD) `; //easy to change the questoin up here
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -181,7 +181,7 @@ function App() {
       listenForRewardClaimed();
 
       const txResponse = await contract.claimReward();
-      await txResponse.wait(); // Wait for transaction confirmation
+      await txResponse.wait(); // Wait for transaction confirmation, not sure if i need this actually
     } catch (error) {
       console.error("Error claiming reward:", error);
       alert("An error occurred while claiming the reward.");
