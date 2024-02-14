@@ -12,7 +12,7 @@ import AdminPanel from "./components/AdminPanel";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
 const contractAddress = "0x1a963DE1Be1e2799Ce06e182976BeB1a7596e905"; //usually would be in .env but here for hackathon so can be checked on chain
-const theQuestion = `Predict Valentines Day BTC price (in whole $USD) `; //easy to change the questoin up here
+const theQuestion = `Predict leap year 29th Feb BTC price (in whole $USD) `; //easy to change the questoin up here
 
 function App() {
   const [contract, setContract] = useState(null);
