@@ -416,6 +416,11 @@ function App() {
             </div>
           </div>
         </main>
+        <div className="testnet-coins-tab">
+    <a href="https://docs.mode.network/mode-testnet/bridging-to-mode-testnet" target="_blank" rel="noopener noreferrer">
+      Need Testnet ETH?
+    </a>
+  </div>
       </div>
       <div className="rules-section">
         <div className="rules">
