@@ -42,6 +42,17 @@ input[type=number] {
   font-size: 0.9rem;
 }
 
+.marquee {
+  position: absolute;
+  top: 1rem;
+  color: #fffc2e;
+  font-size: 0.9rem;
+}
+
+.marquee span {
+  font-weight: bold;
+}
+
 .countdown-timer {
   color: #21e6c1; /* Neon cyan */
   font-size: 1.2rem;
@@ -480,7 +491,6 @@ input[type=number] {
 .testnet-coins-tab::after {
   right: 25%; /* Position for the right stick */
 }
-
 
 /* MEDIA SIZES */
 

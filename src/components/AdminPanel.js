@@ -38,7 +38,7 @@ const AdminPanel = ({
       <div className="admin-item">
         <label>SFS NFT Balance: </label>
         <button onClick={fetchSfsBalance}>Check Balance</button>
-        {sfsBalance && <p> {sfsBalance} WEI</p>}
+        {sfsBalance && <p> {sfsBalance} ETH</p>}
       </div>
       <div className="admin-item">
         <label>Set Winning Number:</label>
@@ -50,7 +50,7 @@ const AdminPanel = ({
         <button onClick={setWinningNum}>Submit Winning Number</button>
       </div>
       <div className="admin-item">
-        <label>Claim SFS Fees:</label>
+        <label>Claim SFS Fees IN WEI!:</label>
         <input
           type="number"
           value={sfsFeeAmount}

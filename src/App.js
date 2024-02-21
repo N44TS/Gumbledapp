@@ -12,7 +12,7 @@ import AdminPanel from "./components/AdminPanel";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
 const contractAddress = "0x1a963DE1Be1e2799Ce06e182976BeB1a7596e905"; //usually would be in .env but here for hackathon so can be checked on chain
-const theQuestion = `Predict leap year 29th Feb BTC price (in whole $USD) `; //easy to change the questoin up here
+const theQuestion = `predict leap year, 29th Feb, BTC price (in whole $USD) `; //easy to change the questoin up here
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -263,12 +263,19 @@ function App() {
   const fetchSfsBalance = async () => {
     if (!contract) return;
     try {
-      const balance = await contract.checkSFSBalance();
-      setSfsBalance(balance.toString());
+      const balanceWei = await contract.checkSFSBalance();
+      const balanceEth = ethers.formatEther(balanceWei);
+      const formattedBalance = parseFloat(balanceEth).toFixed(6); // Rounds to 6 decimal places
+      setSfsBalance(formattedBalance); // ETH instead of Wei
     } catch (error) {
       console.error("Error fetching SFS balance:", error);
     }
   };
+
+  useEffect(() => {
+    fetchSfsBalance();
+    console.log(`sfs balance`);
+  }, [contract]);
 
   const fetchContractBalance = async () => {
     if (!contract) return;
@@ -361,10 +368,13 @@ function App() {
         </div>
       )}
 
-      {/* 
-      ////////////////////////////////
-      ////////////MAIN CONTENT////////
-      //////////////////////////////// */}
+      {/*//////////MAIN CONTENT////////*/}
+      <div className="marquee">
+        <marquee>
+          prize fund value:{" "}
+          <span>{sfsBalance ? `${sfsBalance} ETH` : "Loading..."}</span>
+        </marquee>
+      </div>
       <div className="wallet-address">
         {account && (
           <p>
@@ -417,10 +427,14 @@ function App() {
           </div>
         </main>
         <div className="testnet-coins-tab">
-    <a href="https://docs.mode.network/mode-testnet/bridging-to-mode-testnet" target="_blank" rel="noopener noreferrer">
-      Need Testnet ETH?
-    </a>
-  </div>
+          <a
+            href="https://docs.mode.network/mode-testnet/bridging-to-mode-testnet"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Need Testnet ETH?
+          </a>
+        </div>
       </div>
       <div className="rules-section">
         <div className="rules">
@@ -442,7 +456,10 @@ function App() {
         </div>
       </div>
       <div className="prediction-box-container">
-        <LatestPredictionsTable predictions={latestPredictions} />
+        <LatestPredictionsTable
+          predictions={latestPredictions}
+          numberOfPredictions={numberOfPredictions}
+        />
         {/* // i'll figure out voting functionality after hackathon cos there's no time */}
         {/* <div className="prediction-box voting-box">
           <h4>Coming soon...</h4>
