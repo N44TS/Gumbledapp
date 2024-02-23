@@ -10,7 +10,7 @@ const LatestPredictionsTable = ({ predictions }) => {
             Address:{" "}
             {`${prediction.predictor.substring(
               0,
-              5
+              7
             )}...${prediction.predictor.substring(
               prediction.predictor.length - 4
             )}`}
