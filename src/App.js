@@ -372,7 +372,11 @@ function App() {
       <div className="marquee">
         <marquee>
           prize fund value:{" "}
-          <span>{sfsBalance ? `${sfsBalance} ETH` : "Loading..."}</span>
+          <span>
+            {sfsBalance
+              ? `${sfsBalance} ETH`
+              : "connect to Mode Testnet to view..."}
+          </span>
         </marquee>
       </div>
       <div className="wallet-address">

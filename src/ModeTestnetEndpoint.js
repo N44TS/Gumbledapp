@@ -33,7 +33,7 @@ export const fetchLatestPredictionsModeTestnet = async () => {
 
     // Calculate the start index, ensuring it's not negative
     const startIndex =
-      totalPredictions > BigInt(6) ? totalPredictions - BigInt(6) : BigInt(0); //how many to show in list
+      totalPredictions > BigInt(8) ? totalPredictions - BigInt(8) : BigInt(0); //how many to show in list
 
     for (let i = startIndex; i < totalPredictions; i++) {
       const prediction = await contract.predictions(i.toString());
