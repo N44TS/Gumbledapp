@@ -40,6 +40,7 @@ function App() {
   ]);
   const [sfsBalance, setSfsBalance] = useState(null);
   const [contractBalance, setContractBalance] = useState(null);
+  const [winnerPosition, setWinnerPosition] = useState(null);
 
   // // Temporary variable for development (set to 'true' to simulate being a winner)
   // const [isTempWinner, setIsTempWinner] = useState(true); // Change to true to test winner view
@@ -93,6 +94,7 @@ function App() {
           const isWinnerNow = position > 0;
           setIsWinner(isWinnerNow);
           setShowWinningAnimation(isWinnerNow); // Trigger the animation if the user is a winner
+          setWinnerPosition(position);
         } catch (error) {
           console.error("Error checking winner status:", error);
         }
@@ -117,7 +119,7 @@ function App() {
     };
 
     checkAdminAndWinnerStatus();
-  }, [contract, account]); // Dependencies
+  }, [contract, account]); // Dependencies // Re-run when contract or account changes
 
   //Functions
   const submitPrediction = useCallback(async () => {
@@ -348,7 +350,11 @@ function App() {
 
       {/* Winner card */}
       {isWinner && (
-        <WinnerCard isClaiming={isClaiming} claimReward={claimReward} />
+        <WinnerCard
+          isClaiming={isClaiming}
+          claimReward={claimReward}
+          winnerPosition={winnerPosition}
+        />
       )}
 
       {/*//////////MAIN CONTENT////////*/}
