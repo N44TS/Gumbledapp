@@ -456,7 +456,7 @@ function App() {
             down wins a share of the contract fees(via SFS)! The more people
             interact with this contract, the more Eth to be won!
           </h3>
-          You can submit as many times as you like, *just costs gas.
+          You can submit as many times as you like, *just costs gas. Winners have 36 hours to claim. 
         </div>
       </div>
       <div className="prediction-box-container">
