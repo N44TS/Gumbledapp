@@ -9,6 +9,7 @@ import {
 import CountdownTimer from "./components/CountdownTimer";
 import LatestPredictionsTable from "./components/LiveLatestPredictions";
 import AdminPanel from "./components/AdminPanel";
+import WinnerCard from "./components/WinnerCard";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
 const contractAddress = "0x1a963DE1Be1e2799Ce06e182976BeB1a7596e905"; //usually would be in .env but here for hackathon so can be checked on chain
@@ -320,12 +321,10 @@ function App() {
     }
   };
 
-  ////////////////////////////////
   ////////////RETURN//////////////
-  ////////////////////////////////
   return (
     <div className="app-container">
-      {/* Admin panel stuff */}
+      {/* Admin panel */}
       <AdminPanel
         //so many props
         isAdmin={isAdmin}
@@ -349,23 +348,7 @@ function App() {
 
       {/* Winner card */}
       {isWinner && (
-        <div
-          className={
-            isClaiming ? "winning-animation-spin" : "winning-animation"
-          }
-        >
-          <div className="winning-message">
-            You Won!
-            <p>3rd place</p>
-            <button
-              onClick={claimReward}
-              className="claim-button"
-              disabled={isClaiming}
-            >
-              {isClaiming ? "please wait..." : "Get my money"}
-            </button>
-          </div>
-        </div>
+        <WinnerCard isClaiming={isClaiming} claimReward={claimReward} />
       )}
 
       {/*//////////MAIN CONTENT////////*/}
@@ -456,7 +439,11 @@ function App() {
             down wins a share of the contract fees(via SFS)! The more people
             interact with this contract, the more Eth to be won!
           </h3>
-          You can submit as many times as you like, *just costs gas. Winners have 36 hours to claim. 
+          You can submit as many times as you like, *free, just costs gas.
+          <br></br>
+          <br></br>
+          Submissions close 24 hours before countdown timer ends. Winners have
+          36hrs to claim.
         </div>
       </div>
       <div className="prediction-box-container">
