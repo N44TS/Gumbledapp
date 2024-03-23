@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import abi from "./utils/abi.json";
 
 const modeTestnetRpcUrl = "https://sepolia.mode.network";
-const contractAddress = "0x1a963DE1Be1e2799Ce06e182976BeB1a7596e905";
+const contractAddress = "0xf5dcd91c2984B48E0b0047e38Bd8C09f3963882D";
 
 // Function to fetch the total number of predictions
 export const fetchPredictions = async () => {
@@ -33,7 +33,7 @@ export const fetchLatestPredictionsModeTestnet = async () => {
 
     // Calculate the start index, ensuring it's not negative
     const startIndex =
-      totalPredictions > BigInt(8) ? totalPredictions - BigInt(8) : BigInt(0); //how many to show in list
+      totalPredictions > BigInt(10) ? totalPredictions - BigInt(10) : BigInt(0); //how many to show in list
 
     for (let i = startIndex; i < totalPredictions; i++) {
       const prediction = await contract.predictions(i.toString());

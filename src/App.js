@@ -12,8 +12,8 @@ import AdminPanel from "./components/AdminPanel";
 import WinnerCard from "./components/WinnerCard";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
-const contractAddress = "0x1a963DE1Be1e2799Ce06e182976BeB1a7596e905"; //usually would be in .env but here for hackathon so can be checked on chain
-const theQuestion = `Winner claim window now open, no submissions at this time`; //easy to change the questoin up here
+const contractAddress = "0xf5dcd91c2984B48E0b0047e38Bd8C09f3963882D"; //usually would be in .env but here for hackathon so can be checked on chain
+const theQuestion = `Currently in beta, mainnet this weekend!`; //easy to change the questoin up here
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -402,7 +402,7 @@ function App() {
                 className="prediction-input"
                 placeholder={theQuestion} // Set the placeholder to the value of theQuestion cos its easier to change
               />
-              {/* <button
+              <button
                 onClick={submitPrediction}
                 className="submit-button"
                 disabled={isSubmitting}
@@ -414,7 +414,7 @@ function App() {
                 ) : (
                   "Submit"
                 )}
-              </button> */}
+              </button>
             </div>
           </div>
         </main>

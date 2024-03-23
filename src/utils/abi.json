@@ -11,25 +11,6 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "AdminFeeTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "admin",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
 			},
@@ -111,20 +92,13 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "uint32",
 				"name": "winningNumber",
-				"type": "uint256"
+				"type": "uint32"
 			}
 		],
 		"name": "WinningNumberSet",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "claimAdminFee",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [],
@@ -169,9 +143,22 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "uint32",
+				"name": "_gameEndTime",
+				"type": "uint32"
+			}
+		],
+		"name": "setGameEndTime",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint32",
 				"name": "_winningNumber",
-				"type": "uint256"
+				"type": "uint32"
 			}
 		],
 		"name": "setWinningNumber",
@@ -182,9 +169,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "uint32",
 				"name": "_predictedNumber",
-				"type": "uint256"
+				"type": "uint32"
 			}
 		],
 		"name": "submitPrediction",
@@ -224,19 +211,6 @@
 				"internalType": "address payable",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "adminFeeClaimed",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -296,6 +270,32 @@
 	},
 	{
 		"inputs": [],
+		"name": "gameEndTime",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "gameVersion",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getTotalPredictions",
 		"outputs": [
 			{
@@ -310,14 +310,14 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "uint32",
 				"name": "",
-				"type": "uint256"
+				"type": "uint32"
 			},
 			{
-				"internalType": "uint256",
+				"internalType": "uint32",
 				"name": "",
-				"type": "uint256"
+				"type": "uint32"
 			}
 		],
 		"name": "hasBeenPredictedByVersion",
@@ -422,8 +422,40 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "winningAddresses",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "winningNumber",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "winningNumberSetBalance",
 		"outputs": [
 			{
 				"internalType": "uint256",
