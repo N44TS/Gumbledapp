@@ -12,7 +12,7 @@ import AdminPanel from "./components/AdminPanel";
 import WinnerCard from "./components/WinnerCard";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
-const contractAddress = "0x5B0A34037E3CdbABBcB3af712c989Cd65bEEd76F"; //usually would be in .env but here for hackathon so can be checked on chain
+const contractAddress = "0x84f2762C816F059C97BF7a335C49D500EaF09007"; //usually would be in .env but here for hackathon so can be checked on chain
 const theQuestion = `Currently in beta, mainnet this weekend!`; //easy to change the questoin up here
 
 function App() {
