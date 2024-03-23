@@ -4,13 +4,13 @@ A decentralized prediction-based game built on the Mode network, made to leverag
 
 For the Mode Hackathon I tried to utilise SFS creatively, looking for ways the concept could be used in a fun way. This dApp offers an engaging and potentially rewarding way for users to engage with the SFS mechanism and test their prediction skills.
 
-Live Demo: [Gumbledapp Testnet](https://gumbledapp.xyz/)
+Live Demo: [Gumbledapp Mainnet](https://gumbledapp.xyz/)
 
 For the best experience view on web, the application is currently not optimized for mobile devices.
 
 ## Table of Contents
 
-- [🐸  Gumbledapp – Mode Degen Hackathon Submission](#--gumbledapp--mode-degen-hackathon-submission)
+- [🐸  Gumbledapp](#--gumbledapp)
   - [Table of Contents](#table-of-contents)
   - [Features Summary](#features-summary)
   - [Usage](#usage)
@@ -52,7 +52,7 @@ For the best experience view on web, the application is currently not optimized 
 
 
 ## Usage
-*Please make sure you are connected to the Mode testnet in order to submit.* 
+*Please make sure you are connected to the Mode MAINnet in order to submit.* 
 
 1. Navigate to the prediction section and enter your prediction for the specified event.
 
@@ -69,7 +69,8 @@ For the best experience view on web, the application is currently not optimized 
 Before getting started with Gumbledapp, make sure you have the following prerequisites:
 
 - MetaMask installed in your browser.
-- An Ethereum wallet with some Sequila Ether bridged to Mode on the Mode testnet for interacting with the DApp. Refer to the documentation [here](https://www.mode.network/) for more instructions and how to do it.
+- An Ethereum wallet with some Eth bridged to Mode on the Mode mainnet for interacting with the DApp. Refer to the documentation [here](https://www.mode.network/) for more instructions and how to do it.
+- At least 0.000001 Eth in your wallet in order to submit a prediction.
 
 ## License
 
