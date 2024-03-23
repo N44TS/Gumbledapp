@@ -3,8 +3,8 @@
 import { ethers } from "ethers";
 import abi from "./utils/abi.json";
 
-const modeTestnetRpcUrl = "https://sepolia.mode.network";
-const contractAddress = "0x84f2762C816F059C97BF7a335C49D500EaF09007";
+const modeTestnetRpcUrl = "https://mainnet.mode.network/";
+const contractAddress = "0xD747cE0eFfca846Bf03B7ABEB66788c92DB48E7a";
 
 // Function to fetch the total number of predictions
 export const fetchPredictions = async () => {

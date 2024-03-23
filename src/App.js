@@ -12,8 +12,8 @@ import AdminPanel from "./components/AdminPanel";
 import WinnerCard from "./components/WinnerCard";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
-const contractAddress = "0x84f2762C816F059C97BF7a335C49D500EaF09007"; //usually would be in .env but here for hackathon so can be checked on chain
-const theQuestion = `Currently in beta, mainnet this weekend!`; //easy to change the questoin up here
+const contractAddress = "0xD747cE0eFfca846Bf03B7ABEB66788c92DB48E7a"; //usually would be in .env but here for hackathon so can be checked on chain
+const theQuestion = `Predict the BTC halving day price (in whole $USD)`; //easy to change the question up here
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -68,7 +68,8 @@ function App() {
           const chainId = await window.ethereum.request({
             method: "eth_chainId",
           });
-          setIsModeNetwork(chainId === "0x397"); // "0x397" is Mode network (chain ID 919)
+          setIsModeNetwork(chainId === "0x868b"); // "0x397" is Mode testnet network (chain ID 919)
+          // "0x868b" is Mode mainnet network (chain ID 34443)
         } catch (error) {
           console.error(
             "Error during Ethereum provider initialization:",
@@ -83,7 +84,7 @@ function App() {
     };
 
     init();
-  }, []); // Empty dependency array so this runs only once
+  }, []); // Empty dependency array so this runs only once and doesnt kill my cpu
 
   //are they an admin or a winner?
   useEffect(() => {
@@ -123,6 +124,14 @@ function App() {
 
   //Functions
   const submitPrediction = useCallback(async () => {
+    // Ensure the user is on the correct network and the prediction is valid before submitting
+    if (!isModeNetwork) {
+      alert(
+        "Please change your network to Mode Mainnet to submit predictions."
+      );
+      return;
+    }
+
     if (!prediction || isSubmitting) return;
 
     try {
@@ -141,6 +150,7 @@ function App() {
       setNumberOfPredictions((prevCount) => Number(prevCount) + 1);
     } catch (error) {
       console.error("Error submitting prediction:", error);
+      alert(`Transaction failed: ${error.message}`);
       setIsSubmitting(false);
 
       // Check if the error message contains "Admin cannot submit predictions" and show admin they cant submit
@@ -357,16 +367,18 @@ function App() {
       )}
 
       {/*//////////MAIN CONTENT////////*/}
-      <div className="marquee">
+      {/*//////////MARQUEE PAUSED FOR NOW////////*/}
+      {/* <div className="marquee">
         <marquee>
           prize fund value:{" "}
           <span>
             {sfsBalance
               ? `${sfsBalance} ETH`
-              : "connect to Mode Testnet to view..."}
+              : "connect to Mode Mainet to view..."}
           </span>
         </marquee>
-      </div>
+      </div> */}
+      {/*//////////MARQUEE PAUSED FOR NOW////////*/}
       <div className="wallet-address">
         {account && (
           <p>
@@ -375,9 +387,9 @@ function App() {
           </p>
         )}
         {isModeNetwork ? (
-          <p>Connected to: MODE TESTNET</p>
+          <p>Connected to: MODE MAINNET</p>
         ) : (
-          <p>Please change your network to Mode Testnet!</p>
+          <p>Please change your network to Mode Mainet!</p>
         )}
       </div>
 
@@ -420,11 +432,11 @@ function App() {
         </main>
         <div className="testnet-coins-tab">
           <a
-            href="https://docs.mode.network/mode-testnet/bridging-to-mode-testnet"
+            href="https://docs.mode.network/mode-mainnet/bridge/bridge-to-mode"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Need Testnet ETH?
+            Need Mode ETH?
           </a>
         </div>
       </div>
