@@ -405,7 +405,7 @@ function App() {
 
         <main className="main-content">
           <div className="prediction-section">
-            <h2 className="section-title">This Weeks Gumble</h2>
+            <h2 className="section-title">This Months Gumble</h2>
             <div className="prediction-input-wrapper">
               <input
                 type="number"
