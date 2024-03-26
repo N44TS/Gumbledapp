@@ -367,7 +367,26 @@ function App() {
       )}
 
       {/*//////////MAIN CONTENT////////*/}
-      {/*//////////MARQUEE PAUSED FOR NOW////////*/}
+
+      <div className="marquee">
+        <marquee>
+          <span>Currently in Beta</span>
+        </marquee>
+        <p>
+          Found a bug?
+          <a
+            href="https://m6dx8sgttqf.typeform.com/to/MRL1xyZN"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#fcd116" }}
+          >
+            {" "}
+            Let me know
+          </a>
+        </p>
+      </div>
+
+      {/*//////////BALANCE MARQUEE PAUSED FOR NOW////////*/}
       {/* <div className="marquee">
         <marquee>
           prize fund value:{" "}
@@ -378,7 +397,8 @@ function App() {
           </span>
         </marquee>
       </div> */}
-      {/*//////////MARQUEE PAUSED FOR NOW////////*/}
+      {/*//////////BALANCE MARQUEE PAUSED FOR NOW////////*/}
+
       <div className="wallet-address">
         {account && (
           <p>
