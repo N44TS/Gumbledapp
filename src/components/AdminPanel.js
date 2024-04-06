@@ -1,7 +1,9 @@
 import React from "react";
+import { Pyth } from "../Pyth";
 
 const AdminPanel = ({
   isAdmin,
+  contract,
   showRegistrationStatus,
   isContractRegistered,
   sfsTokenId,
@@ -10,7 +12,6 @@ const AdminPanel = ({
   fetchSfsBalance,
   winningNumber,
   setWinningNumber,
-  setWinningNum,
   sfsFeeAmount,
   setSfsFeeAmount,
   claimSFSFees,
@@ -42,12 +43,7 @@ const AdminPanel = ({
       </div>
       <div className="admin-item">
         <label>Set Winning Number:</label>
-        <input
-          type="number"
-          value={winningNumber}
-          onChange={(e) => setWinningNumber(e.target.value)}
-        />
-        <button onClick={setWinningNum}>Submit Winning Number</button>
+        {isAdmin && <Pyth contract={contract} isAdmin={isAdmin} />}
       </div>
       <div className="admin-item">
         <label>Claim SFS Fees IN WEI!:</label>

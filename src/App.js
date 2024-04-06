@@ -10,10 +10,14 @@ import CountdownTimer from "./components/CountdownTimer";
 import LatestPredictionsTable from "./components/LiveLatestPredictions";
 import AdminPanel from "./components/AdminPanel";
 import WinnerCard from "./components/WinnerCard";
+import { Pyth } from "./Pyth";
 
 //when changing contract address DONT FORGET to chnge in modetestnetendpoint file
-const contractAddress = "0xD747cE0eFfca846Bf03B7ABEB66788c92DB48E7a"; //usually would be in .env but here for hackathon so can be checked on chain
+const contractAddress = "0xD747cE0eFfca846Bf03B7ABEB66788c92DB48E7a";
 const theQuestion = `Predict the BTC halving day price (in whole $USD)`; //easy to change the question up here
+
+//FOR TESTING PURPOSES: MAINnet contract address to test around in staging env
+// const contractAddress = "0xC239421EC67e13e2A90aDb3a0819899dbEe46f90";
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -219,20 +223,6 @@ function App() {
     }
   };
 
-  //function only admin can see, to set the winning number
-  const setWinningNum = async () => {
-    if (!winningNumber) return;
-    try {
-      await contract.setWinningNumber(winningNumber);
-      console.log(`Winning number set to ${winningNumber}`);
-
-      // Reset the winning number state after successful transaction
-      setWinningNumber("");
-    } catch (error) {
-      console.error("Error setting winning number:", error);
-    }
-  };
-
   //function only admin can see, to move the sfs fees to the contract - nft must be owned by contract to work
   const claimSFSFees = async () => {
     const amount = parseFloat(sfsFeeAmount); // Convert string to a floating-point number
@@ -339,6 +329,7 @@ function App() {
       <AdminPanel
         //so many props
         isAdmin={isAdmin}
+        contract={contract}
         showRegistrationStatus={showRegistrationStatus}
         isContractRegistered={isContractRegistered}
         sfsTokenId={sfsTokenId}
@@ -347,7 +338,6 @@ function App() {
         fetchSfsBalance={fetchSfsBalance}
         winningNumber={winningNumber}
         setWinningNumber={setWinningNumber}
-        setWinningNum={setWinningNum}
         sfsFeeAmount={sfsFeeAmount}
         setSfsFeeAmount={setSfsFeeAmount}
         claimSFSFees={claimSFSFees}
