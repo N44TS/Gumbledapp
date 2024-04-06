@@ -46,7 +46,7 @@ For the best experience view on web, the application is currently not optimized 
 
   **Admin Panel**: 
 - Provides the capability to check whether the contract is registered with SFS. 
-- Allows for setting the result (oracle integration planned as the next step)
+- [Pyth Oracle](https://pyth.network/price-feeds) used to fetch the real time result and set the winning number, interacting directly with the contract.
 - Reset the game button; this function clears the predictions array and resets the winningNumber. It also clears the winnerPosition mapping for all addresses that have made predictions
 - Claim SFS fees. Note that the admin must click a button that pays out directly to the contract (see above). Its hard coded in the contract that only the contract address is payable from this function, there is no way for the admin to personally receive the fees.
 

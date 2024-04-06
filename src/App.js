@@ -113,7 +113,7 @@ function App() {
           const isAdminNow =
             adminAddress.toLowerCase() === account.toLowerCase();
           setIsAdmin(isAdminNow);
-          console.log("Are you admin?:", isAdminNow);
+          console.log(isAdminNow);
 
           // Check if the logged-in user is a winner
           await checkIfWinner();
